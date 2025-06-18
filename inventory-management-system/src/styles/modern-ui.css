@@ -1,0 +1,48 @@
+.modern-ui {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.modern-ui .card {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modern-ui .btn-primary {
+  background: #667eea;
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+}
+
+.modern-ui .form-control {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+
+.modern-ui .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+.modern-ui .spinner-border {
+  color: #667eea;
+}
+
+.modern-ui .alert {
+  border-radius: 10px;
+}
+
+.modern-ui .floating-label {
+  color: #667eea;
+}
+
+.modern-ui .img-thumbnail {
+  border-radius: 10px;
+  border: 2px solid rgba(102, 126, 234, 0.5);
+}

@@ -1,0 +1,64 @@
+/* Custom Cursor Styles */
+
+/* Apply cursor pointer to all interactive elements */
+button,
+.btn,
+.nav-link,
+.card-clickable,
+.clickable,
+.form-check-input,
+.dropdown-item,
+a,
+.close,
+.page-link,
+.custom-control-label,
+.form-select,
+.form-control,
+.nav-item,
+.dropdown-toggle,
+.accordion-button,
+.list-group-item-action,
+.modal-close,
+.pagination-link,
+.tab-link,
+.menu-item,
+.action-icon,
+.hover-scale,
+.card.hover-scale,
+.btn-animated {
+  cursor: pointer !important;
+}
+
+/* Add custom cursor styles for different states */
+.btn:disabled,
+button:disabled,
+.form-control:disabled,
+.form-select:disabled,
+.nav-link.disabled {
+  cursor: not-allowed !important;
+}
+
+.loading {
+  cursor: wait !important;
+}
+
+.text-select {
+  cursor: text !important;
+}
+
+.move {
+  cursor: move !important;
+}
+
+.resize {
+  cursor: se-resize !important;
+}
+
+/* Apply custom cursor to draggable elements */
+[draggable="true"] {
+  cursor: grab !important;
+}
+
+[draggable="true"]:active {
+  cursor: grabbing !important;
+}

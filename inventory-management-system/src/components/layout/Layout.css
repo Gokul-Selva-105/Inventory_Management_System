@@ -1,0 +1,132 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar styles */
+.sidebar {
+  min-width: 220px;
+  max-width: 260px;
+  background-color: #343a40;
+  color: #fff;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 1030;
+}
+
+.sidebar-sticky {
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 56px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: 0.25rem;
+  margin: 0.125rem 0;
+}
+
+.sidebar .nav-link:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .nav-link .sidebar-icon {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Mobile sidebar styles */
+.mobile-sidebar {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.mobile-sidebar .accordion-button {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem !important;
+}
+
+.mobile-sidebar .accordion-button:not(.collapsed) {
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.mobile-sidebar .accordion-body {
+  padding: 0;
+}
+
+.mobile-sidebar .nav-link {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    width: 280px;
+    height: calc(100vh - 56px);
+    z-index: 1040;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+
+  .content-container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 15px;
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .main-content {
+    padding: 10px;
+  }
+  
+  .mobile-sidebar .accordion-button {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .mobile-sidebar .nav-link {
+    padding: 0.5rem 1rem;
+  }
+}

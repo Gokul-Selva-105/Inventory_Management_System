@@ -1,0 +1,29 @@
+{
+  "name": "inventory-management-system-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for Inventory Management System",
+  "private": true,
+  "workspaces": [
+    "api",
+    "inventory-management-system"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm run start:api\" \"npm run start:client\"",
+    "start:api": "npm run start --workspace=api",
+    "start:client": "npm run dev --workspace=inventory-management-system",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
+    "dev:api": "npm run dev --workspace=api",
+    "dev:client": "npm run dev --workspace=inventory-management-system",
+    "build": "npm run build --workspace=inventory-management-system",
+    "build:client": "npm run build --workspace=inventory-management-system",
+    "lint": "npm run lint --workspace=inventory-management-system",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "jsqr": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
