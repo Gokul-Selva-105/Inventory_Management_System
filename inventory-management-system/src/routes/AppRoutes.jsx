@@ -8,6 +8,7 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AdminRegister from "../pages/AdminRegister";
+import UserManagement from "../pages/UserManagement";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import QrScanner from "../pages/QrScanner";
 import Schedule from "../pages/Schedule";
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/admin-register" element={<AdminRegister />} />
+        <Route path="/user-management" element={<UserManagement />} />
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>

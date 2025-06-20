@@ -13,7 +13,7 @@ import {
   Container,
   Modal,
 } from "react-bootstrap";
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faQrcode,
@@ -124,41 +124,38 @@ const Schedule = () => {
 
     setError(""); // Clear any previous errors
 
-    // Request camera permission first
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(() => {
-        const newScanner = new Html5QrcodeScanner(
-          "qr-reader",
-          {
-            fps: 10,
-            qrbox: { width: 250, height: 250 },
-            aspectRatio: 1.0,
-            showTorchButtonIfSupported: true,
-            showZoomSliderIfSupported: true,
-            defaultZoomValueIfSupported: 2,
-          },
-          false
-        );
+    try {
+      const newScanner = new Html5QrcodeScanner(
+        "qr-reader",
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0,
+          showTorchButtonIfSupported: true,
+          showZoomSliderIfSupported: true,
+          defaultZoomValueIfSupported: 2,
+          rememberLastUsedCamera: true,
+          supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+        },
+        false
+      );
 
-        newScanner.render(onScanSuccess, onScanError);
-        setScanner(newScanner);
-        setScanning(true);
-      })
-      .catch((err) => {
-        console.error("Camera access denied:", err);
+      newScanner.render(onScanSuccess, onScanError);
+      setScanner(newScanner);
+      setScanning(true);
+    } catch (err) {
+      console.error("Scanner initialization failed:", err);
+      const errorMessage =
+        "Camera access is required for QR scanning. Please follow these steps:\n" +
+        "1. Check that your device has a camera\n" +
+        "2. Make sure you've allowed camera access in your browser settings\n" +
+        "3. If using Windows, ensure camera privacy settings allow browser access\n" +
+        "4. Try closing other applications that might be using the camera\n" +
+        "5. Refresh the page and try again";
 
-        // More detailed error message with instructions
-        const errorMessage =
-          "Camera access is required for QR scanning. Please follow these steps:\n" +
-          "1. Check that your device has a camera\n" +
-          "2. Make sure you've allowed camera access in your browser settings\n" +
-          "3. If using Windows, ensure camera privacy settings allow browser access\n" +
-          "4. Try closing other applications that might be using the camera";
-
-        setError(errorMessage);
-        showToast("Camera access denied. Check browser permissions.", "error");
-      });
+      setError(errorMessage);
+      showToast("Camera access denied. Check browser permissions.", "error");
+    }
   };
 
   // Stop scanning

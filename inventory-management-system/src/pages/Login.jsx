@@ -286,19 +286,7 @@ const Login = () => {
                         Create Account
                       </Link>
                     </p>
-                    <p className="mb-0">
-                      <Link
-                        to="/admin-register"
-                        className="text-decoration-none d-inline-flex align-items-center"
-                        style={{
-                          color: "var(--secondary-600)",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faShieldAlt} className="me-2" />
-                        Admin Registration
-                      </Link>
-                    </p>
+
                   </div>
                 </motion.div>
               </Card.Body>

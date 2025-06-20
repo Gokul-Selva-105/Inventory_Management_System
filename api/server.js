@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import userManagementRoutes from "./routes/userManagementRoutes.js";
 import stockHistoryRoutes from "./routes/stockHistoryRoutes.js";
 import qrEventRoutes from "./routes/qrEventRoutes.js";
 
@@ -64,6 +65,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/users", userManagementRoutes);
 app.use("/api/stock-history", stockHistoryRoutes);
 app.use("/api/qr-events", qrEventRoutes);
 

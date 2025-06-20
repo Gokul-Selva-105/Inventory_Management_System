@@ -81,9 +81,9 @@ const Sidebar = ({ open = false, onClose, mobile = false }) => {
       description: "Create New Item",
     },
     {
-      path: "/admin/register",
+      path: "/user-management",
       icon: faUserPlus,
-      label: "Register User",
+      label: "User Management",
       description: "Add New Users",
     },
   ];
