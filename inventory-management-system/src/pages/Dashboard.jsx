@@ -702,47 +702,16 @@ const Dashboard = () => {
                                   {move.productNumber}
                                 </code>
                                 <CopyButton text={move.productNumber} />
-                                <Button
-                                  variant="link"
-                                  className="text-danger p-0 ms-2"
-                                  title="Delete record"
-                                  onClick={async () => {
-                                    if (
-                                      window.confirm(
-                                        "Are you sure you want to delete this record?"
-                                      )
-                                    ) {
-                                      try {
-                                        await axios.delete(
-                                          `/api/products/movements/${move._id}`
-                                        );
-                                        showToast(
-                                          "Record deleted successfully",
-                                          "success"
-                                        );
-                                        fetchProductMovements(); // Refresh the movements list
-                                      } catch (error) {
-                                        console.error(
-                                          "Error deleting record:",
-                                          error
-                                        );
-                                        if (error.response?.status === 401) {
-                                          showToast(
-                                            "You don't have permission to delete records. Admin access required.",
-                                            "error"
-                                          );
-                                        } else {
-                                          showToast(
-                                            "Failed to delete record",
-                                            "error"
-                                          );
-                                        }
-                                      }
-                                    }
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faTrash} size="sm" />
-                                </Button>
+                                {isAdmin && (
+                                  <Button
+                                    variant="link"
+                                    className="text-danger p-0 ms-2"
+                                    title="Delete record"
+                                    onClick={() => handleDeleteMovementClick(move)}
+                                  >
+                                    <FontAwesomeIcon icon={faTrash} size="sm" />
+                                  </Button>
+                                )}
                               </div>
                             </td>
                             <td className="py-3">
@@ -887,47 +856,47 @@ const Dashboard = () => {
                                   {product.productNumber}
                                 </code>
                                 <CopyButton text={product.productNumber} />
-                                <Button
-                                  variant="link"
-                                  className="text-danger p-0 ms-2"
-                                  title="Delete product"
-                                  onClick={async () => {
-                                    if (
-                                      window.confirm(
-                                        "Are you sure you want to delete this product?"
-                                      )
-                                    ) {
-                                      try {
-                                        await axios.delete(
-                                          `/api/products/${product._id}`
-                                        );
-                                        showToast(
-                                          "Product deleted successfully",
-                                          "success"
-                                        );
-                                        refreshData(); // Refresh all dashboard data
-                                      } catch (error) {
-                                        console.error(
-                                          "Error deleting product:",
-                                          error
-                                        );
-                                        if (error.response?.status === 401) {
+                                {isAdmin && (
+                                  <Button
+                                    variant="link"
+                                    className="text-danger p-0 ms-2"
+                                    title="Delete product"
+                                    onClick={async () => {
+                                      if (
+                                        window.confirm(
+                                          "Are you sure you want to delete this product?"
+                                        )
+                                      ) {
+                                        try {
+                                          await productsAPI.delete(product._id);
                                           showToast(
-                                            "You don't have permission to delete products. Admin access required.",
-                                            "error"
+                                            "Product deleted successfully",
+                                            "success"
                                           );
-                                        } else {
-                                          showToast(
-                                            "Failed to delete product",
-                                            "error"
+                                          refreshData(); // Refresh all dashboard data
+                                        } catch (error) {
+                                          console.error(
+                                            "Error deleting product:",
+                                            error
                                           );
+                                          if (error.response?.status === 401 || error.response?.status === 403) {
+                                            showToast(
+                                              "You don't have permission to delete products. Admin access required.",
+                                              "error"
+                                            );
+                                          } else {
+                                            showToast(
+                                              "Failed to delete product. Please try again.",
+                                              "error"
+                                            );
+                                          }
                                         }
                                       }
-                                    }
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faTrash} size="sm" />
-                                </Button>
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faTrash} size="sm" />
+                                  </Button>
+                                )}
                               </div>
                             </td>
                             <td className="py-3">
