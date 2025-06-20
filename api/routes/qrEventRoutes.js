@@ -99,4 +99,17 @@ router.patch("/:id/status", async (req, res) => {
   }
 });
 
+// DELETE /api/qr-events/:id - delete a QR event
+router.delete("/:id", async (req, res) => {
+  try {
+    const event = await QrEvent.findByIdAndDelete(req.params.id);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+    res.json({ message: "Event deleted successfully", deletedEvent: event });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default router;

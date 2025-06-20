@@ -98,7 +98,7 @@ const connectDB = async () => {
 connectDB();
 
 // Start server
-const PORT = process.env.PORT || 5001; // Changed from 5000 to 5001 to avoid conflicts
+const PORT = process.env.PORT || 5000; // Changed from 5000 to 5001 to avoid conflicts
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });

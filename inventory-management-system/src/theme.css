@@ -156,12 +156,12 @@
   --text-muted: #9ca3af;
   --text-inverse: #111827;
   --dark: #f9fafb;
-  
+
   /* Border Colors */
   --border-light: #374151;
   --border-medium: #4b5563;
   --border-dark: #6b7280;
-  
+
   /* Shadow Variables - Adjusted for dark mode */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
@@ -187,7 +187,12 @@ body {
 }
 
 /* Text Colors */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-primary) !important;
   font-weight: 600;
 }
@@ -614,18 +619,22 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-primary);
   border-color: var(--border-light);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* Form control styles for dark mode */
-.form-control, .form-select {
+.form-control,
+.form-select {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   border-color: var(--border-medium);
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   border-color: var(--primary-400);
@@ -636,5 +645,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
   border-color: var(--border-medium);
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }

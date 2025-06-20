@@ -471,11 +471,15 @@ export const productController = {
         return res.status(404).json({ message: "Movement record not found" });
       }
 
-      // Use deleteOne instead of remove() which is deprecated
       await ProductMovement.deleteOne({ _id: req.params.id });
       res.json({ message: "Movement record removed" });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      // Added detailed error logging and stack traces
+      console.error("Delete movement error:", error);
+      res.status(500).json({
+        message: error.message,
+        ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
+      });
     }
   },
 };

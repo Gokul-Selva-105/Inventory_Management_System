@@ -105,4 +105,15 @@ export const stockHistoryAPI = {
   create: (historyData) => api.post("/stock-history", historyData),
 };
 
+// QR Events API calls
+export const qrEventsAPI = {
+  getAll: () => api.get("/qr-events"),
+  getScheduled: () => api.get("/qr-events/scheduled"),
+  getUpcoming: () => api.get("/qr-events/upcoming"),
+  create: (eventData) => api.post("/qr-events", eventData),
+  createScheduled: (eventData) => api.post("/qr-events/scheduled", eventData),
+  updateStatus: (id, status) => api.patch(`/qr-events/${id}/status`, { status }),
+  delete: (id) => api.delete(`/qr-events/${id}`),
+};
+
 export default api;

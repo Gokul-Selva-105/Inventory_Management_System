@@ -63,7 +63,12 @@ router.post("/movement", productController.recordProductMovement);
 // Delete product movement
 // @route   DELETE /api/products/movements/:id
 // @desc    Delete a product movement record
-// @access  Private (any authenticated user)
-router.delete("/movements/:id", protect, productController.deleteProductMovement);
+// @access  Private (admin only)
+router.delete(
+  "/movements/:id",
+  protect,
+  admin,
+  productController.deleteProductMovement
+);
 
 export default router;

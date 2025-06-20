@@ -33,7 +33,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { productsAPI } from "../services/api";
+import { productsAPI, qrEventsAPI } from "../services/api";
 
 // Available locations
 const LOCATIONS = {
@@ -322,8 +322,10 @@ const Schedule = () => {
     if (!eventToDelete) return;
 
     try {
-      // In a real implementation, you would call an API endpoint
-      // For now, we'll just filter it out from the state
+      // Call the API to delete the event
+      await qrEventsAPI.delete(eventToDelete._id);
+      
+      // Update the state to remove the deleted event
       const updatedEvents = scheduledEvents.filter(
         (e) => e._id !== eventToDelete._id
       );
@@ -331,7 +333,7 @@ const Schedule = () => {
       showToast("Event deleted successfully", "success");
     } catch (error) {
       console.error("Error deleting event:", error);
-      showToast("Failed to delete event", "error");
+      showToast("Failed to delete event. Please try again.", "error");
     } finally {
       setShowDeleteModal(false);
       setEventToDelete(null);
@@ -342,8 +344,7 @@ const Schedule = () => {
     <div
       className="schedule-page"
       style={{
-        background:
-          "linear-gradient(135deg, #e0f7fa 0%, #80deea 50%, #4dd0e1 100%)",
+        background: "#f8f9fa",
         minHeight: "100vh",
         padding: "2rem 0",
       }}
@@ -363,19 +364,19 @@ const Schedule = () => {
         <Row className="justify-content-center mb-4">
           <Col lg={isMobile ? 12 : 8} xl={isMobile ? 12 : 6}>
             <Card
-              className="shadow-lg border-0"
+              className="shadow border-0"
               style={{
-                background: "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(20px)",
-                borderRadius: "20px",
+                borderRadius: "8px",
+                background: "white",
+                border: "1px solid #dee2e6",
               }}
             >
               <Card.Header
                 className="border-0 text-center"
                 style={{
-                  background:
-                    "linear-gradient(to right, #00acc1 0%, #26c6da 100%)",
-                  borderRadius: "20px 20px 0 0",
+                  background: "#495057",
+                  color: "white",
+                  borderRadius: "8px 8px 0 0",
                   padding: "1.5rem",
                 }}
               >
@@ -421,33 +422,57 @@ const Schedule = () => {
 
                 <Form>
                   <Form.Group className="mb-4">
-                    <Form.Label className="fw-semibold text-dark mb-2">
+                    <Form.Label className="fw-bold text-dark mb-3" style={{ fontSize: "1.1rem" }}>
+                      <FontAwesomeIcon icon={faSearch} className="me-2 text-primary" />
                       Product Number
                     </Form.Label>
-                    <InputGroup>
+                    <InputGroup className="shadow-sm">
                       <Form.Control
                         type="text"
                         name="product"
                         value={form.product}
                         onChange={handleChange}
-                        placeholder="Enter product number or scan QR"
+                        placeholder="Enter product number or scan QR code"
                         required
                         style={{
-                          borderRadius: "15px 0 0 15px",
-                          border: "2px solid #e9ecef",
-                          padding: "12px 16px",
+                          borderRadius: "8px 0 0 8px",
+                          border: "2px solid #6c757d",
+                          padding: "14px 18px",
+                          fontSize: "1rem",
+                          fontWeight: "500",
+                          background: "#f8f9fa",
+                          color: "#495057",
+                          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.border = "2px solid #495057";
+                          e.target.style.background = "white";
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.border = "2px solid #6c757d";
+                          e.target.style.background = "#f8f9fa";
                         }}
                       />
                       <Button
-                        variant="outline-primary"
+                        variant="outline-secondary"
                         onClick={handleManualSearch}
                         disabled={productLoading}
                         style={{
-                          border: "2px solid #667eea",
+                          border: "2px solid #6c757d",
                           borderLeft: "none",
                           borderRight: "none",
-                          background: "white",
-                          color: "#667eea",
+                          background: "#e9ecef",
+                          color: "#495057",
+                          padding: "14px 18px",
+                          fontWeight: "600",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "#dee2e6";
+                          e.target.style.color = "#212529";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "#e9ecef";
+                          e.target.style.color = "#495057";
                         }}
                       >
                         {productLoading ? (
@@ -460,11 +485,20 @@ const Schedule = () => {
                         onClick={startScanner}
                         disabled={scanning}
                         style={{
-                          borderRadius: "0 15px 15px 0",
-                          background:
-                            "linear-gradient(to right, #00acc1 0%, #26c6da 100%)",
-                          border: "none",
-                          padding: "12px 16px",
+                          borderRadius: "0 8px 8px 0",
+                          background: "#495057",
+                          border: "2px solid #495057",
+                          color: "white",
+                          padding: "14px 18px",
+                          fontWeight: "600",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "#343a40";
+                          e.target.style.borderColor = "#343a40";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "#495057";
+                          e.target.style.borderColor = "#495057";
                         }}
                       >
                         <FontAwesomeIcon icon={scanning ? faTimes : faQrcode} />
@@ -472,23 +506,7 @@ const Schedule = () => {
                     </InputGroup>
                   </Form.Group>
 
-                  <Form.Group className="mb-4">
-                    <Form.Label className="fw-semibold text-dark mb-2">
-                      Product Name
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="productName"
-                      value={form.productName || (product ? product.name : "")}
-                      onChange={handleChange}
-                      placeholder="Enter product name"
-                      style={{
-                        borderRadius: "15px",
-                        border: "2px solid #e9ecef",
-                        padding: "12px 16px",
-                      }}
-                    />
-                  </Form.Group>
+
 
                   {scanning && (
                     <div className="mb-4 text-center">

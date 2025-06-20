@@ -33,6 +33,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { showToast } from "../utils/toast";
+import { productsAPI } from "../services/api";
 
 const LOCATIONS = {
   BANGALORE: "bangalore",
@@ -157,18 +158,18 @@ const Dashboard = () => {
     if (!movementToDelete) return;
 
     try {
-      await axios.delete(`/api/products/movements/${movementToDelete._id}`);
+      await productsAPI.deleteMovement(movementToDelete._id);
       showToast("Record deleted successfully", "success");
       fetchProductMovements(); // Refresh the movements list
     } catch (error) {
       console.error("Error deleting record:", error);
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
         showToast(
           "You don't have permission to delete records. Admin access required.",
           "error"
         );
       } else {
-        showToast("Failed to delete record", "error");
+        showToast("Failed to delete record. Please try again.", "error");
       }
     } finally {
       setShowDeleteModal(false);
